@@ -4,7 +4,6 @@ import styles from "../stylesComponents/stylesButtonComponents";
 import { LinearGradient } from "expo-linear-gradient";
 
 function Button({ title, onPress }) {
-	console.log("re-render");
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity activeOpacity={1} onPress={onPress}>

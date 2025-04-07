@@ -25,4 +25,7 @@ export const styles = StyleSheet.create({
 		height: 24,
 		marginHorizontal: 16,
 	},
+	isError: {
+		borderColor: "red",
+	},
 });

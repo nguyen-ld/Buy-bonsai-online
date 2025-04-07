@@ -9,9 +9,10 @@ const MyTabs = createBottomTabNavigator();
 
 function Navigation() {
 	const [fontsLoader] = useFonts({
-		Medium: require("../../assets/fonts/Poppins-Medium.ttf"),
-		SemiBold: require("../../assets/fonts/Poppins-SemiBold.ttf"),
-		Light: require("../../assets/fonts/Poppins-Light.ttf"),
+		Medium: require("../../assets/fonts/Lato-Regular.ttf"),
+		Bold: require("../../assets/fonts/Lato-Bold.ttf"),
+		Light: require("../../assets/fonts/Lato-Light.ttf"),
+		Thin: require("../../assets/fonts/Lato-Thin.ttf"),
 	});
 	if (!fontsLoader) {
 		return 0;
@@ -54,6 +55,7 @@ function Navigation() {
 				tabBarItemStyle: {
 					paddingVertical: 10,
 				},
+				headerShown: false,
 			})}
 		>
 			<MyTabs.Screen

@@ -2,11 +2,6 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
 	class chi_tiet_chau_cay extends Model {
-		/**
-		 * Helper method for defining associations.
-		 * This method is not a part of Sequelize lifecycle.
-		 * The `models/index` file will call this method automatically.
-		 */
 		static associate(models) {
 			chi_tiet_chau_cay.belongsTo(models.san_pham, {
 				foreignKey: "id_san_pham",
@@ -51,6 +46,10 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			lo_thoat_nuoc: {
 				type: DataTypes.BOOLEAN,
+				allowNull: false,
+			},
+			sizes: {
+				type: DataTypes.ENUM("S", "M", "L"),
 				allowNull: false,
 			},
 		},

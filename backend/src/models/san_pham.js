@@ -11,13 +11,13 @@ module.exports = (sequelize, DataTypes) => {
 			san_pham.belongsTo(models.danh_muc, {
 				foreignKey: "id_danh_muc",
 			});
-			san_pham.belongsTo(models.chi_tiet_cay_trong, {
+			san_pham.hasMany(models.chi_tiet_cay_trong, {
 				foreignKey: "id_san_pham",
 			});
-			san_pham.belongsTo(models.chi_tiet_chau_cay, {
+			san_pham.hasMany(models.chi_tiet_chau_cay, {
 				foreignKey: "id_san_pham",
 			});
-			san_pham.belongsTo(models.chi_tiet_phu_kien, {
+			san_pham.hasMany(models.chi_tiet_phu_kien, {
 				foreignKey: "id_san_pham",
 			});
 			san_pham.hasMany(models.kho_san_pham, {
@@ -59,6 +59,10 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			hinh_anh: {
 				type: DataTypes.STRING,
+				allowNull: false,
+			},
+			ngay_tao: {
+				type: DataTypes.DATE,
 				allowNull: false,
 			},
 		},

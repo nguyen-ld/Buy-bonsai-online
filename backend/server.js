@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const path = require("path");
 const { engine } = require("express-handlebars");
+const cookieParser = require("cookie-parser");
 
 //import
 const api = require("./src/router/api");
@@ -19,6 +20,7 @@ app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", path.join(__dirname, "src\\views"));
 
+app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(
@@ -26,7 +28,7 @@ app.use(
 		extended: false,
 	})
 );
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "src\\public")));
 
 app.get("/", async (req, res) => {
 	res.render("home");

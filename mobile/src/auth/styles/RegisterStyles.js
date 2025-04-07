@@ -49,6 +49,7 @@ export const styles = StyleSheet.create({
 	},
 	createAccount: {
 		color: "#009245",
+		fontFamily: "Medium",
 	},
 	containerConditional: {
 		marginHorizontal: 20,
@@ -60,5 +61,6 @@ export const styles = StyleSheet.create({
 	},
 	conditional: {
 		color: "#007537",
+		textDecorationLine: "underline",
 	},
 });

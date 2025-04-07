@@ -27,4 +27,9 @@ export const styles = StyleSheet.create({
 		fontFamily: "Medium",
 		fontSize: 24,
 	},
+	containerInput: {
+		flexDirection: "row",
+		justifyContent: "space-around",
+		marginVertical: 20,
+	},
 });

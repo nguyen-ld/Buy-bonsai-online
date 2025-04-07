@@ -2,12 +2,15 @@ import { Text, View } from "react-native";
 import { useFonts } from "expo-font";
 import { styles } from "../styles/VerifyOTPStyles";
 import { TextInput } from "react-native-gesture-handler";
+import Button from "../../components/uiComponents/Button";
 
-function VerifyOTP() {
+function VerifyOTP({ route }) {
+	const email = route.params.email;
 	const [fontsLoader] = useFonts({
-		Medium: require("../../assets/fonts/Poppins-Medium.ttf"),
-		SemiBold: require("../../assets/fonts/Poppins-SemiBold.ttf"),
-		Light: require("../../assets/fonts/Poppins-Light.ttf"),
+		Medium: require("../../assets/fonts/Lato-Regular.ttf"),
+		Bold: require("../../assets/fonts/Lato-Bold.ttf"),
+		Light: require("../../assets/fonts/Lato-Light.ttf"),
+		Thin: require("../../assets/fonts/Lato-Thin.ttf"),
 	});
 	if (!fontsLoader) {
 		return 0;
@@ -16,10 +19,28 @@ function VerifyOTP() {
 		<View style={styles.container}>
 			<Text style={styles.title}>Verification </Text>
 			<Text style={styles.content}>
-				Chúng tôi đã gửi mã xác minh tới email :{" "}
+				Chúng tôi đã gửi mã xác minh tới email : {email}
 			</Text>
 
-			<View>
+			<View style={styles.containerInput}>
+				<TextInput
+					style={styles.input}
+					placeholder="-"
+					maxLength={1}
+					placeholderTextColor="gray"
+				/>
+				<TextInput
+					style={styles.input}
+					placeholder="-"
+					maxLength={1}
+					placeholderTextColor="gray"
+				/>
+				<TextInput
+					style={styles.input}
+					placeholder="-"
+					maxLength={1}
+					placeholderTextColor="gray"
+				/>
 				<TextInput
 					style={styles.input}
 					placeholder="-"
@@ -27,6 +48,7 @@ function VerifyOTP() {
 					placeholderTextColor="gray"
 				/>
 			</View>
+			<Button title="Xác nhận" />
 		</View>
 	);
 }

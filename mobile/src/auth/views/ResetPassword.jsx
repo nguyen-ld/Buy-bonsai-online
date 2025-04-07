@@ -5,32 +5,54 @@ import { styles } from "../styles/ResetPasswordStyles";
 import Input from "../../components/uiComponents/Input";
 import { useState } from "react";
 import Button from "../../components/uiComponents/Button";
+import { useSendOTPRequestMutation } from "../../redux/service/customerService";
+import Loading from "../../components/uiComponents/Loading";
 
 function ResetPassword({ navigation }) {
 	const [fontsLoader] = useFonts({
-		Medium: require("../../assets/fonts/Poppins-Medium.ttf"),
-		SemiBold: require("../../assets/fonts/Poppins-SemiBold.ttf"),
-		Light: require("../../assets/fonts/Poppins-Light.ttf"),
+		Medium: require("../../assets/fonts/Lato-Regular.ttf"),
+		Bold: require("../../assets/fonts/Lato-Bold.ttf"),
+		Light: require("../../assets/fonts/Lato-Light.ttf"),
+		Thin: require("../../assets/fonts/Lato-Thin.ttf"),
 	});
 	if (!fontsLoader) {
 		return 0;
 	}
 
 	const [email, setEmail] = useState(null);
-	const [error, setError] = useState(false);
+	const [error, setError] = useState(null);
+
+	const [sendOTPRequest, { isLoading }] = useSendOTPRequestMutation();
 
 	const validate = () => {
 		let check = true;
 		if (!email) {
 			setError("Vui lòng nhập địa chỉ email. Thử lại!");
 			check = false;
-		} else {
-			return check;
 		}
+		return check;
 	};
 
-	const handleSend = () => {
-		navigation.navigate("verify-otp");
+	const handleSend = async () => {
+		if (!validate()) {
+			return;
+		}
+		try {
+			console.log(" Request gửi đi:", email);
+			const response = await sendOTPRequest({ email }).unwrap(); // trực tiếp data ra mà k cần qua payload
+			if (response.status === 200) {
+				console.log("gửi otp thành công");
+				setError(null);
+				navigation.navigate("verify-otp", { email: email });
+			}
+		} catch (error) {
+			console.log(error);
+			if (error.data.type === "email-failure") {
+				setError(error.data.message);
+			} else if (error.data.type === "email-not-exists") {
+				setError(error.data.message);
+			}
+		}
 	};
 
 	return (
@@ -44,7 +66,9 @@ function ResetPassword({ navigation }) {
 				<Input
 					placeholder="Nhập địa chỉ email của bạn"
 					value={email}
-					onChangeText={(text) => setEmail(text)}
+					onChangeText={(text) => {
+						setEmail(text.trim());
+					}}
 				/>
 			</View>
 
@@ -68,6 +92,8 @@ function ResetPassword({ navigation }) {
 			<View style={styles.buttonSend}>
 				<Button title="Gửi" onPress={handleSend} />
 			</View>
+
+			<Loading visible={isLoading} />
 		</View>
 	);
 }

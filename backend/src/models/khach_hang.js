@@ -45,6 +45,12 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.STRING,
 				allowNull: false,
 			},
+			otp: {
+				type: DataTypes.STRING,
+			},
+			expired: {
+				type: DataTypes.DATE,
+			},
 		},
 		{
 			sequelize,

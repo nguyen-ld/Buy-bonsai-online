@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.STRING,
 				allowNull: false,
 			},
+			ten_man_hinh: {
+				type: DataTypes.STRING,
+				allowNull: false,
+			},
 		},
 		{
 			sequelize,
