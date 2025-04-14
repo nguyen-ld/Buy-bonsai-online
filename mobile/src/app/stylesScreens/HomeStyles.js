@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
 	container: {
-		flex: 1,
 		backgroundColor: "white",
 	},
 	header: {
@@ -45,8 +44,9 @@ export const styles = StyleSheet.create({
 		top: 30,
 	},
 	body: {
-		marginHorizontal: 20,
+		marginLeft: 25,
 		marginTop: 10,
+		flex: 1,
 	},
 	categoryTitle: {
 		fontFamily: "Medium",
@@ -61,8 +61,9 @@ export const styles = StyleSheet.create({
 		lineHeight: 20,
 		textDecorationLine: "underline",
 		textAlign: "right",
-		fontFamily: "Medim",
+		fontFamily: "Medium",
 		marginVertical: 15,
+		marginRight: 25,
 	},
 	containerCombo: {
 		marginHorizontal: 20,

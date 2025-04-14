@@ -5,9 +5,9 @@ export const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "flex-start",
 		gap: 13,
-		paddingHorizontal: 24,
+		paddingHorizontal: 27,
 		marginTop: 10,
-		marginBottom: 20,
+		marginBottom: 15,
 	},
 	title: {
 		fontSize: 14,

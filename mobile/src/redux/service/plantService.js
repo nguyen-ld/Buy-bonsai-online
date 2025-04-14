@@ -14,6 +14,9 @@ export const plantApi = createApi({
 		plantByCharacteristics: build.query({
 			query: (dac_diem) => `plant-list/${dac_diem}`,
 		}),
+		plantDetailsById: build.query({
+			query: (id_san_pham) => `detail-product/${id_san_pham}`,
+		}),
 	}),
 });
 
@@ -21,4 +24,5 @@ export const {
 	usePlantRequestQuery,
 	useNewPlantRequestQuery,
 	usePlantByCharacteristicsQuery,
+	usePlantDetailsByIdQuery,
 } = plantApi;

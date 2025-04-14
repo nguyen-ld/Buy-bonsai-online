@@ -26,13 +26,22 @@ const {
 } = require("../controllers/CategoriesControllers");
 
 // api plant
-const { addPlant } = require("../controllers/plantControllers");
+const { addPlant } = require("../controllers/PlantControllers");
 
 // api potted plant
 const { addPottedPlant } = require("../controllers/PottedPlantControllers");
 
 // api ware-house
 const { addQuantity } = require("../controllers/WareHouseControllers");
+
+// api cart
+const {
+	addToCart,
+	cartList,
+	updateQuantity,
+	deleteItemCart,
+	deleteAllItemInCart,
+} = require("../controllers/CartControllers");
 
 // call api account
 router.post("/create-account", createAccount);
@@ -57,7 +66,18 @@ router.post("/add-plant", addPlant);
 // call api ware-house
 router.post("/add-quantity", addQuantity);
 
-// call pi potted-plant
+// call api potted-plant
 router.post("/add-potted-plant", addPottedPlant);
-
+// call api cart
+router.post("/addToCart", addToCart);
+router.get("/cart-list/:id_khach_hang", cartList);
+router.patch(
+	"/update-quantity/:id_khach_hang/san_pham/:id_san_pham",
+	updateQuantity
+);
+router.delete(
+	"/delete-item-cart/khach_hang/:id_khach_hang/san_pham/:id_san_pham",
+	deleteItemCart
+);
+router.delete("/delete-all-item-cart/:id_khach_hang", deleteAllItemInCart);
 module.exports = router;

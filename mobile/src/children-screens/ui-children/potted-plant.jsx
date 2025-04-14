@@ -15,8 +15,6 @@ function PottedPlant({ navigation, route }) {
 		route.params.id_danh_muc
 	);
 
-	console.log(data);
-
 	return (
 		<ScrollView style={styles.container}>
 			<StatusBar backgroundColor="transparent" translucent />

@@ -3,7 +3,7 @@ import { styles } from "../stylesComponents/stylesHeader";
 import { Ionicons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 
-function Header({ isIconLeft, isIconRight, title, nameIcon, onBack }) {
+function Header({ isIconLeft, isIconRight, title, nameIcon, onBack, onPress }) {
 	const [fontsLoader] = useFonts({
 		Medium: require("../../assets/fonts/Lato-Regular.ttf"),
 		Bold: require("../../assets/fonts/Lato-Bold.ttf"),
@@ -24,7 +24,7 @@ function Header({ isIconLeft, isIconRight, title, nameIcon, onBack }) {
 				<View>
 					<Text style={styles.titleHeader}>{title}</Text>
 				</View>
-				<Pressable>
+				<Pressable onPress={onPress}>
 					{isIconRight && (
 						<Ionicons name={nameIcon} size={24} color="black" />
 					)}

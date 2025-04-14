@@ -9,8 +9,9 @@ const styles = StyleSheet.create({
 		borderRadius: 15,
 	},
 	title: {
-		fontFamily: "SemiBold",
+		fontFamily: "Medium",
 		fontSize: 18,
+		lineHeight: 20,
 		textAlign: "center",
 		color: "white",
 	},

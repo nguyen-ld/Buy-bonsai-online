@@ -4,7 +4,7 @@ import { useFonts } from "expo-font";
 import { styles } from "../stylesComponents/stylesPlantProductCatalogComponents";
 import { useState } from "react";
 
-function PlantProductCatalog({ categories, setSelectedCategory }) {
+function PlantProductCatalog({ categories, setSelectedCategory, isCatalog }) {
 	const [fontsLoader] = useFonts({
 		Medium: require("../../assets/fonts/Lato-Regular.ttf"),
 		Bold: require("../../assets/fonts/Lato-Bold.ttf"),
@@ -24,15 +24,21 @@ function PlantProductCatalog({ categories, setSelectedCategory }) {
 					return (
 						<TouchableOpacity
 							key={index}
-							onPress={() => {
-								setSelectedCategory(category);
-								setSelected(category);
-							}}
+							activeOpacity={1}
+							onPress={
+								!isCatalog
+									? () => {
+											setSelectedCategory(category);
+											setSelected(category);
+									  }
+									: undefined
+							}
 						>
 							<Text
 								style={[
 									styles.title,
 									selected === category && styles.selected,
+									isCatalog && styles.selected,
 								]}
 							>
 								{category}

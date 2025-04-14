@@ -5,7 +5,7 @@ function Notification() {
 	return (
 		<View style={{ backgroundColor: "white", flex: 1 }}>
 			<StatusBar backgroundColor="transparent" translucent />
-			<Header title="thông báo" isIconLeft={true} />
+			<Header title="thông báo" />
 		</View>
 	);
 }

@@ -1,9 +1,17 @@
-import { StatusBar, Text, View } from "react-native";
+import { StatusBar, View } from "react-native";
 import { useFonts } from "expo-font";
 import { styles } from "../styles-children/styleProductDetails";
-import Header from "../../components/uiComponents/Header";
+import { useState } from "react";
 
-function ProductsDetails() {
+import Header from "../../components/uiComponents/Header";
+import ProductInformations from "../../components/uiComponents/ProductInformations";
+import Properties from "../../components/uiComponents/Properties";
+import * as plantServices from "../../redux/service/plantService";
+import * as cartServices from "../../redux/service/cartServices";
+import PlantProductCatalog from "../../components/uiComponents/PlantProductCatalog";
+import CarouselSlide from "../../components/uiComponents/CarouselSlide";
+
+function ProductsDetails({ route, navigation }) {
 	const [fontsLoader] = useFonts({
 		Medium: require("../../assets/fonts/Lato-Regular.ttf"),
 		Bold: require("../../assets/fonts/Lato-Bold.ttf"),
@@ -13,6 +21,65 @@ function ProductsDetails() {
 	if (!fontsLoader) {
 		return 0;
 	}
+
+	const { data, isLoading } = plantServices.usePlantDetailsByIdQuery(
+		route.params.id_san_pham
+	);
+
+	const [addToCart, { isLoading: isAddToCartLoading }] =
+		cartServices.useAddToCartMutation();
+
+	let catalogList = [];
+
+	if (data && data.data.id_danh_muc === 1) {
+		catalogList = [
+			data.data.danh_muc.ten_danh_muc,
+			data.data.chi_tiet_cay_trongs[0].dac_diem,
+		];
+	} else {
+		catalogList = [];
+	}
+
+	const [quantity, setQuantity] = useState(0);
+	const [priceCurrent, setPriceCurrent] = useState(0);
+
+	const handleChangeQuantity = (number) => {
+		if (!isLoading && data) {
+			setQuantity(number);
+			setPriceCurrent(data.data.gia_san_pham * number);
+		}
+	};
+
+	const hanleBuyProducts = async () => {
+		try {
+			console.log("data request : ", {
+				quantity,
+				priceCurrent,
+				khach_hang: 2,
+			});
+			const response = await addToCart({
+				id_khach_hang: 2,
+				quantity: quantity,
+				id_product: route.params.id_san_pham,
+			});
+			if (response) {
+				console.log("Đặt hàng thành công");
+			} else {
+				console.log("Đặt hàng thất bại");
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
+	const handleBack = () => {
+		navigation.goBack();
+	};
+
+	const handleCart = () => {
+		navigation.navigate("cart");
+	};
+
 	return (
 		<View style={styles.container}>
 			<StatusBar
@@ -20,12 +87,34 @@ function ProductsDetails() {
 				translucent
 				barStyle="dark-content"
 			/>
+
 			<Header
 				isIconLeft={true}
 				title="chi tiết sản phẩm"
 				nameIcon="cart-outline"
 				isIconRight={true}
+				onBack={handleBack}
+				onPress={handleCart}
 			/>
+
+			<CarouselSlide item={data?.data?.hinh_anh} />
+
+			<View style={styles.catalog}>
+				<PlantProductCatalog
+					categories={catalogList}
+					isCatalog={true}
+				/>
+			</View>
+
+			{!isLoading && <ProductInformations item={data.data} />}
+
+			{!isLoading && (
+				<Properties
+					onChange={handleChangeQuantity}
+					item={data.data}
+					onBuy={hanleBuyProducts}
+				/>
+			)}
 		</View>
 	);
 }

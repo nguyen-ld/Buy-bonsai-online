@@ -144,6 +144,11 @@ const detailsProducts = async (req, res) => {
 				},
 				{
 					model: kho_san_pham,
+					attributes: ["tinh_trang"],
+				},
+				{
+					model: danh_muc,
+					attributes: ["ten_danh_muc"],
 				},
 			],
 		});

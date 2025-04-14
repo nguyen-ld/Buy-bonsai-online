@@ -11,8 +11,7 @@ export const styles = StyleSheet.create({
 		fontSize: 14,
 	},
 	containerProduct: {
-		marginLeft: 20,
-
+		marginLeft: 25,
 		flex: 1,
 	},
 });

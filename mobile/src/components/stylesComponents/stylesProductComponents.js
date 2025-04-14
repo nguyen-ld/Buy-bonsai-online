@@ -1,11 +1,14 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
+
+const { width } = Dimensions.get("window");
+
 export const styles = StyleSheet.create({
 	container: {
 		marginBottom: 20,
-		width: "48%",
+		width: "50%",
 	},
 	containerImages: {
-		width: "100%",
+		width: width,
 	},
 	containerContent: {
 		marginTop: 15,
@@ -14,8 +17,9 @@ export const styles = StyleSheet.create({
 	image: {
 		borderRadius: 8,
 		backgroundColor: "#F6F6F6",
-		height: 144,
-		width: 165,
+		height: 134,
+		width: 155,
+		resizeMode: "contain",
 	},
 	titleProducts: {
 		fontSize: 17,

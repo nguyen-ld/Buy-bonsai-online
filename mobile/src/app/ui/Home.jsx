@@ -53,6 +53,11 @@ function Home({ navigation }) {
 		fetchAllProducts();
 	}, [categories]);
 
+	const handleClickDetails = (item) => {
+		navigation.navigate("products-details", {
+			id_san_pham: item.id_san_pham,
+		});
+	};
 	return (
 		<ScrollView style={styles.container}>
 			<StatusBar barStyle="dark-content" backgroundColor="#F6F6F6" />
@@ -68,7 +73,9 @@ function Home({ navigation }) {
 						không gian nhà bạn
 					</Text>
 					<View style={styles.containerContent}>
-						<Text style={styles.content}>Xem hàng mới về </Text>
+						<Pressable>
+							<Text style={styles.content}>Xem hàng mới về </Text>
+						</Pressable>
 						<Ionicons
 							style={{ marginTop: 10 }}
 							name="arrow-forward-outline"
@@ -78,10 +85,12 @@ function Home({ navigation }) {
 					</View>
 				</View>
 				<View style={styles.containerIcon}>
-					<Image
-						source={require("../../assets/cart.png")}
-						style={styles.icon}
-					/>
+					<Pressable onPress={() => navigation.navigate("cart")}>
+						<Image
+							source={require("../../assets/cart.png")}
+							style={styles.icon}
+						/>
+					</Pressable>
 				</View>
 			</View>
 
@@ -101,7 +110,12 @@ function Home({ navigation }) {
 								<FlatList
 									data={filteredProducts}
 									renderItem={({ item }) => (
-										<Products item={item} />
+										<Products
+											item={item}
+											onPress={() =>
+												handleClickDetails(item)
+											}
+										/>
 									)}
 									keyExtractor={(item) =>
 										item.id_san_pham.toString()

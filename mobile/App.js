@@ -14,6 +14,7 @@ import Plant from "./src/children-screens/ui-children/plant";
 import PottedPlant from "./src/children-screens/ui-children/potted-plant";
 import Accessory from "./src/children-screens/ui-children/accessory";
 import ProductsDetails from "./src/children-screens/ui-children/products-details";
+import Cart from "./src/children-screens/ui-children/cart";
 
 const Stack = createStackNavigator();
 
@@ -62,7 +63,7 @@ export default function App() {
 							},
 						}}
 					></Stack.Screen> */}
-					{/* <Stack.Screen
+					<Stack.Screen
 						name="tab"
 						component={Navigation}
 						options={{
@@ -89,10 +90,18 @@ export default function App() {
 						options={{
 							headerShown: false,
 						}}
-					></Stack.Screen> */}
+					></Stack.Screen>
+
 					<Stack.Screen
 						name="products-details"
 						component={ProductsDetails}
+						options={{
+							headerShown: false,
+						}}
+					></Stack.Screen>
+					<Stack.Screen
+						name="cart"
+						component={Cart}
 						options={{
 							headerShown: false,
 						}}

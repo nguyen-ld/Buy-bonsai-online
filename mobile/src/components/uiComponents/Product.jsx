@@ -1,8 +1,8 @@
-import { View, Image, Text } from "react-native";
+import { View, Image, Text, Pressable } from "react-native";
 import { styles } from "../stylesComponents/stylesProductComponents";
 import { useFonts } from "expo-font";
 
-function Products({ item }) {
+function Products({ item, onPress }) {
 	const [fontsLoader] = useFonts({
 		Medium: require("../../assets/fonts/Lato-Regular.ttf"),
 		Bold: require("../../assets/fonts/Lato-Bold.ttf"),
@@ -30,21 +30,25 @@ function Products({ item }) {
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.containerImages}>
-				<Image
-					source={{
-						uri: item.hinh_anh,
-					}}
-					style={styles.image}
-				/>
-			</View>
-			<View style={styles.containerContent}>
-				<Text style={styles.titleProducts}>{item.ten_san_pham}</Text>
-				{item.id_danh_muc === 1 && renderCharacteristics}
-				<Text style={styles.priceProducts}>
-					{Number(item.gia_san_pham).toLocaleString()} đ
-				</Text>
-			</View>
+			<Pressable onPress={onPress}>
+				<View style={styles.containerImages}>
+					<Image
+						source={{
+							uri: item.hinh_anh,
+						}}
+						style={styles.image}
+					/>
+				</View>
+				<View style={styles.containerContent}>
+					<Text style={styles.titleProducts}>
+						{item.ten_san_pham}
+					</Text>
+					{item.id_danh_muc === 1 && renderCharacteristics}
+					<Text style={styles.priceProducts}>
+						{Number(item.gia_san_pham).toLocaleString()} đ
+					</Text>
+				</View>
+			</Pressable>
 		</View>
 	);
 }

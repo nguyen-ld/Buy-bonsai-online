@@ -18,7 +18,7 @@ function Plant({ route, navigation }) {
 		setSelectCategory(item);
 	};
 	const { data: plantData, isLoading: isPlantLoaing } =
-		plantService.usePlantRequestQuery(route.params.id_danh_muc);
+		plantService.usePlantRequestQuery(route.params?.id_danh_muc);
 
 	const { data: newPlantData, isLoading: isNewPlantLoaing } =
 		plantService.useNewPlantRequestQuery();
@@ -76,7 +76,16 @@ function Plant({ route, navigation }) {
 		navigation.goBack();
 	};
 
-	console.log(products);
+	const handleToCart = () => {
+		navigation.navigate("cart");
+	};
+
+	const handleClickDetails = (item) => {
+		navigation.navigate("products-details", {
+			id_san_pham: item.id_san_pham,
+		});
+	};
+
 	return (
 		<View style={styles.container}>
 			<StatusBar backgroundColor="transparent" translucent />
@@ -86,6 +95,7 @@ function Plant({ route, navigation }) {
 				isIconRight={true}
 				title="Cây trồng"
 				nameIcon="cart-outline"
+				onPress={handleToCart}
 			/>
 			<PlantProductCatalog
 				categories={category}
@@ -94,18 +104,22 @@ function Plant({ route, navigation }) {
 			<View style={styles.containerProduct}>
 				{isAnyLoading ? (
 					<Loading visible={isPlantLoaing} />
-				) : products ? (
+				) : products?.data?.length > 0 ? (
 					<FlatList
 						data={products.data}
 						keyExtractor={(item) => item.id_san_pham.toString()}
-						renderItem={({ item }) => <Products item={item} />}
+						renderItem={({ item }) => (
+							<Products
+								item={item}
+								onPress={() => handleClickDetails(item)}
+							/>
+						)}
 						numColumns={2}
 						scrollEnabled={true}
 						contentContainerStyle={{ flexGrow: 1 }}
 						columnWrapperStyle={{
-							justifyContent: "flex-start",
+							justifyContent: "space-between",
 							flex: 1,
-							gap: 10,
 						}}
 						scrollIndicatorInsets={false}
 						showsVerticalScrollIndicator={false}
