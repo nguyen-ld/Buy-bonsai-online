@@ -1,4 +1,4 @@
-import { StatusBar, View } from "react-native";
+import { StatusBar, View, ScrollView } from "react-native";
 import { useFonts } from "expo-font";
 import { styles } from "../styles-children/styleProductDetails";
 import { useState } from "react";
@@ -10,6 +10,7 @@ import * as plantServices from "../../redux/service/plantService";
 import * as cartServices from "../../redux/service/cartServices";
 import PlantProductCatalog from "../../components/uiComponents/PlantProductCatalog";
 import CarouselSlide from "../../components/uiComponents/CarouselSlide";
+import Loading from "../../components/uiComponents/Loading";
 
 function ProductsDetails({ route, navigation }) {
 	const [fontsLoader] = useFonts({
@@ -26,12 +27,14 @@ function ProductsDetails({ route, navigation }) {
 		route.params.id_san_pham
 	);
 
+	console.log(data);
+
 	const [addToCart, { isLoading: isAddToCartLoading }] =
 		cartServices.useAddToCartMutation();
 
 	let catalogList = [];
 
-	if (data && data.data.id_danh_muc === 1) {
+	if (data && data?.data?.id_danh_muc === 1) {
 		catalogList = [
 			data.data.danh_muc.ten_danh_muc,
 			data.data.chi_tiet_cay_trongs[0].dac_diem,
@@ -81,13 +84,15 @@ function ProductsDetails({ route, navigation }) {
 	};
 
 	return (
-		<View style={styles.container}>
+		<ScrollView
+			style={styles.container}
+			showsVerticalScrollIndicator={false}
+		>
 			<StatusBar
 				backgroundColor="transparent"
 				translucent
 				barStyle="dark-content"
 			/>
-
 			<Header
 				isIconLeft={true}
 				title="chi tiết sản phẩm"
@@ -96,18 +101,16 @@ function ProductsDetails({ route, navigation }) {
 				onBack={handleBack}
 				onPress={handleCart}
 			/>
-
 			<CarouselSlide item={data?.data?.hinh_anh} />
-
 			<View style={styles.catalog}>
 				<PlantProductCatalog
 					categories={catalogList}
 					isCatalog={true}
 				/>
 			</View>
-
-			{!isLoading && <ProductInformations item={data.data} />}
-
+			{!isLoading && data?.data && (
+				<ProductInformations item={data?.data} />
+			)}
 			{!isLoading && (
 				<Properties
 					onChange={handleChangeQuantity}
@@ -115,7 +118,7 @@ function ProductsDetails({ route, navigation }) {
 					onBuy={hanleBuyProducts}
 				/>
 			)}
-		</View>
+		</ScrollView>
 	);
 }
 

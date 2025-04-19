@@ -1,11 +1,11 @@
 import { View, Text } from "react-native";
 import { useFonts } from "expo-font";
-
 import { styles } from "../styles/ResetPasswordStyles";
-import Input from "../../components/uiComponents/Input";
 import { useState } from "react";
-import Button from "../../components/uiComponents/Button";
 import { useSendOTPRequestMutation } from "../../redux/service/customerService";
+
+import Input from "../../components/uiComponents/Input";
+import Button from "../../components/uiComponents/Button";
 import Loading from "../../components/uiComponents/Loading";
 
 function ResetPassword({ navigation }) {
@@ -39,7 +39,7 @@ function ResetPassword({ navigation }) {
 		}
 		try {
 			console.log(" Request gửi đi:", email);
-			const response = await sendOTPRequest({ email }).unwrap(); // trực tiếp data ra mà k cần qua payload
+			const response = await sendOTPRequest({ email }).unwrap();
 			if (response.status === 200) {
 				console.log("gửi otp thành công");
 				setError(null);
@@ -75,17 +75,10 @@ function ResetPassword({ navigation }) {
 			{error && (
 				<View
 					style={{
-						marginTop: 15,
+						marginTop: 10,
 					}}
 				>
-					<Text
-						style={{
-							color: "red",
-							fontFamily: "Medium",
-						}}
-					>
-						{error}
-					</Text>
+					<Text style={styles.error}>{error}</Text>
 				</View>
 			)}
 

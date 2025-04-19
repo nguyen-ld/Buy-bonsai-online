@@ -11,13 +11,15 @@ export const styles = StyleSheet.create({
 	title: {
 		fontSize: 30,
 		textAlign: "center",
-		fontFamily: "SemiBold",
+		fontFamily: "Bold",
 		marginTop: 5,
+		lineHeight: 40,
 	},
 	subTitlte: {
 		fontFamily: "Medium",
 		fontSize: 20,
 		textAlign: "center",
+		lineHeight: 30,
 	},
 	containerInfo: {
 		marginTop: 15,
@@ -36,10 +38,12 @@ export const styles = StyleSheet.create({
 	},
 	titleRemember: {
 		fontFamily: "Medium",
+		fontSize: 16,
 	},
 	resetPassWord: {
 		fontFamily: "Medium",
 		color: "#007537",
+		fontSize: 16,
 	},
 	options: {
 		flexDirection: "row",
@@ -67,8 +71,20 @@ export const styles = StyleSheet.create({
 	titleFooter: {
 		textAlign: "center",
 		fontFamily: "Medium",
+		fontSize: 16,
 	},
 	createAccount: {
 		color: "#009245",
+		fontSize: 16,
+	},
+	containerError: {
+		marginTop: 15,
+		marginHorizontal: 25,
+	},
+	error: {
+		color: "red",
+		fontFamily: "Medium",
+		fontSize: 16,
+		lineHeight: 22,
 	},
 });

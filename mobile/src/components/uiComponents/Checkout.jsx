@@ -2,7 +2,7 @@ import { Pressable, Text, View } from "react-native";
 import { styles } from "../stylesComponents/stylesCheckoutComponents";
 import { useFonts } from "expo-font";
 import { Ionicons } from "@expo/vector-icons";
-function Checkout({ totalPrice }) {
+function Checkout({ totalPrice, onPress }) {
 	const [fontsLoader] = useFonts({
 		Medium: require("../../assets/fonts/Lato-Regular.ttf"),
 		Bold: require("../../assets/fonts/Lato-Bold.ttf"),
@@ -20,7 +20,7 @@ function Checkout({ totalPrice }) {
 					{totalPrice?.toLocaleString()} đ
 				</Text>
 			</View>
-			<Pressable style={styles.containerButton}>
+			<Pressable style={styles.containerButton} onPress={onPress}>
 				<Text style={styles.titleButton}>Tiến hành thanh toán</Text>
 				<Ionicons
 					name="chevron-forward-outline"

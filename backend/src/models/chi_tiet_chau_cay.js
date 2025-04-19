@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
 				allowNull: false,
 			},
 			mau_sac: {
-				type: DataTypes.INTEGER,
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
 			chieu_cao: {

@@ -11,20 +11,22 @@ export const styles = StyleSheet.create({
 	title: {
 		fontSize: 30,
 		textAlign: "center",
-		fontFamily: "SemiBold",
+		fontFamily: "Bold",
 		marginTop: 5,
+		lineHeight: 40,
 	},
 	subTitlte: {
 		fontFamily: "Medium",
 		fontSize: 20,
 		textAlign: "center",
+		lineHeight: 30,
 	},
 
 	options: {
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "center",
-		marginHorizontal: 25,
+		marginHorizontal: 27,
 		marginTop: 5,
 	},
 	line: {
@@ -46,21 +48,37 @@ export const styles = StyleSheet.create({
 	titleFooter: {
 		textAlign: "center",
 		fontFamily: "Medium",
+		fontSize: 16,
+		lineHeight: 30,
 	},
 	createAccount: {
 		color: "#009245",
 		fontFamily: "Medium",
+		fontSize: 16,
+		lineHeight: 30,
 	},
 	containerConditional: {
 		marginHorizontal: 20,
 		marginTop: 15,
+		paddingVertical: 8,
 	},
 	info: {
 		fontFamily: "Medium",
 		textAlign: "center",
+		fontSize: 16,
 	},
 	conditional: {
 		color: "#007537",
 		textDecorationLine: "underline",
+		fontSize: 16,
+	},
+	containerBug: {
+		marginTop: 10,
+		marginHorizontal: 25,
+	},
+	bug: {
+		color: "red",
+		fontFamily: "Medium",
+		fontSize: 16,
 	},
 });

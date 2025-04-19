@@ -20,32 +20,34 @@ function PlantProductCatalog({ categories, setSelectedCategory, isCatalog }) {
 	return (
 		<View style={styles.container}>
 			<View style={styles.containerTabs}>
-				{categories.map((category, index) => {
-					return (
-						<TouchableOpacity
-							key={index}
-							activeOpacity={1}
-							onPress={
-								!isCatalog
-									? () => {
-											setSelectedCategory(category);
-											setSelected(category);
-									  }
-									: undefined
-							}
-						>
-							<Text
-								style={[
-									styles.title,
-									selected === category && styles.selected,
-									isCatalog && styles.selected,
-								]}
+				{categories.lnegth > 0 &&
+					categories.map((category, index) => {
+						return (
+							<TouchableOpacity
+								key={index}
+								activeOpacity={1}
+								onPress={
+									!isCatalog
+										? () => {
+												setSelectedCategory(category);
+												setSelected(category);
+										  }
+										: undefined
+								}
 							>
-								{category}
-							</Text>
-						</TouchableOpacity>
-					);
-				})}
+								<Text
+									style={[
+										styles.title,
+										selected === category &&
+											styles.selected,
+										isCatalog && styles.selected,
+									]}
+								>
+									{category}
+								</Text>
+							</TouchableOpacity>
+						);
+					})}
 			</View>
 		</View>
 	);

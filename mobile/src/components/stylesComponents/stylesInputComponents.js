@@ -11,10 +11,11 @@ export const styles = StyleSheet.create({
 		borderColor: "#8B8B8B",
 	},
 	inputValue: {
-		fontFamily: "Light",
-		fontSize: 14,
+		fontFamily: "Medium",
+		fontSize: 16,
 		paddingHorizontal: 10,
 		flex: 1,
+		height: 43,
 	},
 	isFocus: {
 		borderColor: "#007537",

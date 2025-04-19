@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	titleHeader: {
-		fontFamily: "Medium",
+		fontFamily: "Bold",
 		fontSize: 16,
 		lineHeight: 20,
 		textTransform: "uppercase",

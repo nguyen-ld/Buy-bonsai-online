@@ -173,89 +173,89 @@ const cartList = async (req, res) => {
 		});
 	}
 };
-const updateQuantity = async (req, res) => {
-	try {
-		const { id_san_pham, id_khach_hang } = req.params;
-		const { quantity } = req.body;
+// const updateQuantity = async (req, res) => {
+// 	try {
+// 		const { id_san_pham, id_khach_hang } = req.params;
+// 		const { quantity } = req.body;
 
-		// Kiểm tra khách hàng tồn tại
-		const user = await khach_hang.findByPk(id_khach_hang);
-		if (!user) {
-			return res.status(400).json({
-				status: 400,
-				message: "Khách hàng không tồn tại",
-			});
-		}
-		console.log("User : ", user);
+// 		// Kiểm tra khách hàng tồn tại
+// 		const user = await khach_hang.findByPk(id_khach_hang);
+// 		if (!user) {
+// 			return res.status(400).json({
+// 				status: 400,
+// 				message: "Khách hàng không tồn tại",
+// 			});
+// 		}
+// 		console.log("User : ", user);
 
-		// Tìm giỏ hàng của khách hàng
-		const cart = await gio_hang.findOne({
-			where: { id_khach_hang: id_khach_hang },
-		});
-		if (!cart) {
-			return res.status(400).json({
-				status: 400,
-				message: "Giỏ hàng không tồn tại",
-			});
-		}
+// 		// Tìm giỏ hàng của khách hàng
+// 		const cart = await gio_hang.findOne({
+// 			where: { id_khach_hang: id_khach_hang },
+// 		});
+// 		if (!cart) {
+// 			return res.status(400).json({
+// 				status: 400,
+// 				message: "Giỏ hàng không tồn tại",
+// 			});
+// 		}
 
-		// Tìm chi tiết sản phẩm trong giỏ hàng
-		const existing = await chi_tiet_gio_hang.findOne({
-			where: {
-				id_gio_hang: cart.id_gio_hang,
-				id_san_pham: id_san_pham,
-			},
-		});
-		if (!existing) {
-			return res.status(400).json({
-				status: 400,
-				message: "Sản phẩm không tồn tại trong giỏ hàng",
-			});
-		}
+// 		// Tìm chi tiết sản phẩm trong giỏ hàng
+// 		const existing = await chi_tiet_gio_hang.findOne({
+// 			where: {
+// 				id_gio_hang: cart.id_gio_hang,
+// 				id_san_pham: id_san_pham,
+// 			},
+// 		});
+// 		if (!existing) {
+// 			return res.status(400).json({
+// 				status: 400,
+// 				message: "Sản phẩm không tồn tại trong giỏ hàng",
+// 			});
+// 		}
 
-		// Lấy giá sản phẩm
-		const product = await san_pham.findByPk(id_san_pham);
-		if (!product) {
-			return res.status(400).json({
-				status: 400,
-				message: "Không tìm thấy sản phẩm",
-			});
-		}
+// 		// Lấy giá sản phẩm
+// 		const product = await san_pham.findByPk(id_san_pham);
+// 		if (!product) {
+// 			return res.status(400).json({
+// 				status: 400,
+// 				message: "Không tìm thấy sản phẩm",
+// 			});
+// 		}
 
-		const tong_tien = quantity * product.gia_san_pham;
+// 		const tong_tien = quantity * product.gia_san_pham;
 
-		// Cập nhật số lượng và tổng tiền
-		await chi_tiet_gio_hang.update(
-			{ so_luong: quantity, tong_tien: tong_tien },
-			{
-				where: {
-					id_gio_hang: cart.id_gio_hang,
-					id_san_pham: id_san_pham,
-				},
-			}
-		);
+// 		// Cập nhật số lượng và tổng tiền
+// 		await chi_tiet_gio_hang.update(
+// 			{ so_luong: quantity, tong_tien: tong_tien },
+// 			{
+// 				where: {
+// 					id_gio_hang: cart.id_gio_hang,
+// 					id_san_pham: id_san_pham,
+// 				},
+// 			}
+// 		);
 
-		// Lấy dữ liệu mới cập nhật
-		const updatedData = await chi_tiet_gio_hang.findOne({
-			where: {
-				id_gio_hang: cart.id_gio_hang,
-				id_san_pham: id_san_pham,
-			},
-		});
+// 		// Lấy dữ liệu mới cập nhật
+// 		const updatedData = await chi_tiet_gio_hang.findOne({
+// 			where: {
+// 				id_gio_hang: cart.id_gio_hang,
+// 				id_san_pham: id_san_pham,
+// 			},
+// 		});
 
-		return res.status(200).json({
-			status: 200,
-			message: "Cập nhật số lượng thành công",
-			data: updatedData,
-		});
-	} catch (error) {
-		console.error(error);
-		return res.status(500).json({
-			status: 500,
-			message: error.message,
-		});
-	}
-};
+// 		return res.status(200).json({
+// 			status: 200,
+// 			message: "Cập nhật số lượng thành công",
+// 			data: updatedData,
+// 		});
+// 	} catch (error) {
+// 		console.error(error);
+// 		return res.status(500).json({
+// 			status: 500,
+// 			message: error.message,
+// 		});
+// 	}
+// };
 
 const deleteItemCart = async (req, res) => {
 	try {
@@ -388,7 +388,7 @@ const deleteAllItemInCart = async (req, res) => {
 module.exports = {
 	addToCart,
 	cartList,
-	updateQuantity,
+	// updateQuantity,
 	deleteItemCart,
 	deleteAllItemInCart,
 };

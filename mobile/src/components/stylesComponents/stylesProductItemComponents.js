@@ -3,18 +3,18 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
 	container: {
 		backgroundColor: "white",
-		marginHorizontal: 24,
+		marginHorizontal: 30,
 		marginVertical: 15,
 	},
 	containerItems: {
 		flexDirection: "row",
 		alignItems: "center",
-		gap: 15,
+		gap: 25,
 	},
 	blockProducts: {
 		flexDirection: "row",
 		alignItems: "center",
-		gap: 15,
+		gap: 20,
 		flex: 1,
 	},
 	properties: {
@@ -24,7 +24,7 @@ export const styles = StyleSheet.create({
 	boxChangeQuantity: {
 		flexDirection: "row",
 		alignItems: "center",
-		gap: 10,
+		gap: 15,
 	},
 	changeCart: {
 		flexDirection: "row",
@@ -77,5 +77,16 @@ export const styles = StyleSheet.create({
 	line: {
 		fontSize: 16,
 		fontFamily: "Medium",
+	},
+	quantityProducts: {
+		fontSize: 14,
+		fontFamily: "Medium",
+		lineHeight: 22,
+		marginTop: 5,
+	},
+	success: {
+		fontFamily: "Medium",
+		fontSize: 16,
+		color: "#007537",
 	},
 });

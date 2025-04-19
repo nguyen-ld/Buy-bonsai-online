@@ -322,6 +322,58 @@ const plantList = async (req, res) => {
 		});
 	}
 };
+const searchProducts = async (req, res) => {
+	try {
+		const { ten_san_pham } = req.params;
+		console.log("Tìm sản phẩm:", ten_san_pham);
+
+		const danhMuc = await danh_muc.findOne({
+			where: { id_danh_muc: 1 },
+		});
+
+		const includeModels = [
+			{
+				model: kho_san_pham,
+				attributes: ["tinh_trang"],
+			},
+		];
+
+		if (danhMuc && danhMuc.id_danh_muc === 1) {
+			includeModels.push({
+				model: chi_tiet_cay_trong,
+				attributes: ["dac_diem"],
+			});
+		}
+
+		const result = await san_pham.findAll({
+			where: {
+				ten_san_pham: { [Op.like]: `%${ten_san_pham.toLowerCase()}%` },
+			},
+			include: includeModels,
+		});
+
+		if (result.length > 0) {
+			return res.json({
+				status: 200,
+				message: "Tìm thấy sản phẩm",
+				data: result,
+			});
+		} else {
+			return res.json({
+				status: 404,
+				message: "Không tìm thấy sản phẩm",
+				data: [],
+			});
+		}
+	} catch (error) {
+		console.log("Lỗi tìm kiếm sản phẩm:", error);
+		return res.json({
+			status: 500,
+			message: error.message,
+		});
+	}
+};
+
 module.exports = {
 	addProduct,
 	productLists,
@@ -329,4 +381,5 @@ module.exports = {
 	productLimitLists,
 	newPlantList,
 	plantList,
+	searchProducts,
 };

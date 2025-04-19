@@ -17,6 +17,9 @@ module.exports = (sequelize, DataTypes) => {
 			khach_hang.hasMany(models.thong_bao, {
 				foreignKey: "id_khach_hang",
 			});
+			khach_hang.hasMany(models.refreshtoken, {
+				foreignKey: "id_khach_hang",
+			});
 		}
 	}
 	khach_hang.init(

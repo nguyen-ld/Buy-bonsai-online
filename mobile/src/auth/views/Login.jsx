@@ -12,13 +12,13 @@ import {
 import { useState, memo, useEffect, useRef } from "react";
 import { useFonts } from "expo-font";
 import { styles } from "../styles/LoginStyles";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/slice/authSlide";
+import { useLoginRequestMutation } from "../../redux/service/customerService";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Input from "../../components/uiComponents/Input";
 import Button from "../../components/uiComponents/Button";
-import { useDispatch } from "react-redux";
-import { login } from "../../redux/slice/authSlide";
-
-import { useLoginRequestMutation } from "../../redux/service/customerService";
 import Loading from "../../components/uiComponents/Loading";
 
 function Login({ navigation }) {
@@ -82,10 +82,8 @@ function Login({ navigation }) {
 				dispatch(login({ id_user: response.data.id_khach_hang }));
 				if (isChecked) {
 					await AsyncStorage.setItem("data", inputData);
-					await AsyncStorage.setItem("password", password);
 				} else {
 					await AsyncStorage.removeItem("data");
-					await AsyncStorage.removeItem("password");
 				}
 				// setError(null);
 				console.log("login thành công", response);
@@ -163,18 +161,8 @@ function Login({ navigation }) {
 						/>
 
 						{error.email_phone && (
-							<View
-								style={{
-									marginTop: 15,
-									marginHorizontal: 25,
-								}}
-							>
-								<Text
-									style={{
-										color: "red",
-										fontFamily: "Medium",
-									}}
-								>
+							<View style={styles.containerError}>
+								<Text style={styles.error}>
 									{error.email_phone}
 								</Text>
 							</View>
@@ -196,18 +184,8 @@ function Login({ navigation }) {
 						/>
 
 						{error.password && (
-							<View
-								style={{
-									marginTop: 15,
-									marginHorizontal: 25,
-								}}
-							>
-								<Text
-									style={{
-										color: "red",
-										fontFamily: "Medium",
-									}}
-								>
+							<View style={styles.containerError}>
+								<Text style={styles.error}>
 									{error.password}
 								</Text>
 							</View>
@@ -250,6 +228,7 @@ function Login({ navigation }) {
 								style={{
 									fontFamily: "Medium",
 									marginHorizontal: 10,
+									fontSize: 16,
 								}}
 							>
 								Hoặc

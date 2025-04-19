@@ -49,4 +49,16 @@ export const styles = StyleSheet.create({
 		marginBottom: 15,
 		color: "#007537",
 	},
+	use: {
+		textAlign: "right",
+		flexWrap: "wrap",
+		flex: 1,
+		marginLeft: 30,
+	},
+	titleUse: {
+		textAlign: "right",
+	},
+	subTitleUse: {
+		width: "30%",
+	},
 });

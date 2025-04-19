@@ -28,6 +28,18 @@ export const customerApi = createApi({
 				},
 			}),
 		}),
+		customerInformation: build.query({
+			query: (id_khach_hang) => `customer-information/${id_khach_hang}`,
+			invalidatesTags: ["customer"],
+		}),
+		updateInfoCustomer: build.mutation({
+			query: ({ id_khach_hang, data }) => ({
+				url: `update-customer/${id_khach_hang}`,
+				method: "PATCH",
+				body: data,
+			}),
+			providesTags: ["customer"],
+		}),
 	}),
 });
 
@@ -35,4 +47,6 @@ export const {
 	useLoginRequestMutation,
 	useCreateAccountRequestMutation,
 	useSendOTPRequestMutation,
+	useCustomerInformationQuery,
+	useUpdateInfoCustomerMutation,
 } = customerApi;

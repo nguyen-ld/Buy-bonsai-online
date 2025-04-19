@@ -9,17 +9,46 @@ const cartSlide = createSlice({
 	initialState,
 	reducers: {
 		toggleSelectedItem: (state, action) => {
-			const itemID = action.payload;
-			const index = state.selectedItem.indexOf(itemID);
+			const {
+				id_san_pham,
+				so_luong,
+				ten_san_pham,
+				gia_san_pham,
+				hinh_anh,
+				dac_diem,
+			} = action.payload;
+			const existingItem = state.selectedItem.find(
+				(item) => item.id_san_pham == id_san_pham
+			);
 
-			if (index > -1) {
-				state.selectedItem.splice(index, 1);
+			if (existingItem) {
+				state.selectedItem = state.selectedItem.filter(
+					(item) => item.id_san_pham !== id_san_pham
+				);
 			} else {
-				state.selectedItem.push(itemID);
+				state.selectedItem.push({
+					id_san_pham,
+					so_luong,
+					ten_san_pham,
+					gia_san_pham,
+					hinh_anh,
+					dac_diem,
+				});
+			}
+		},
+		updateQuantity: (state, action) => {
+			const { id_san_pham, so_luong } = action.payload;
+
+			const checkExisting = state.selectedItem.find(
+				(item) => item.id_san_pham === id_san_pham
+			);
+
+			if (checkExisting) {
+				checkExisting.so_luong = so_luong;
 			}
 		},
 	},
 });
 
-export const { toggleSelectedItem } = cartSlide.actions;
+export const { toggleSelectedItem, updateQuantity } = cartSlide.actions;
 export default cartSlide.reducer;

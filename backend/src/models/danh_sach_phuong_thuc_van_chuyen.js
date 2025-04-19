@@ -34,7 +34,6 @@ module.exports = (sequelize, DataTypes) => {
 			},
 			ngay_giao_du_kien: {
 				type: DataTypes.DATE,
-				allowNull: false,
 			},
 		},
 		{

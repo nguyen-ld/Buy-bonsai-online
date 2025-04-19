@@ -9,14 +9,7 @@ export const cartApi = createApi({
 			query: (id_khach_hang) => `cart-list/${id_khach_hang}`,
 			providesTags: ["Cart"],
 		}),
-		changeQuantity: builder.mutation({
-			query: ({ id_khach_hang, id_san_pham, quantity }) => ({
-				url: `/update-quantity/${id_khach_hang}/san_pham/${id_san_pham}`,
-				method: "PATCH",
-				body: { quantity },
-			}),
-			invalidatesTags: ["Cart"],
-		}),
+
 		deleteItemInCart: builder.mutation({
 			query: ({ id_khach_hang, id_san_pham }) => ({
 				url: `/delete-item-cart/khach_hang/${id_khach_hang}/san_pham/${id_san_pham}`,
@@ -37,7 +30,6 @@ export const cartApi = createApi({
 
 export const {
 	useUserCartListQuery,
-	useChangeQuantityMutation,
 	useDeleteItemInCartMutation,
 	useAddToCartMutation,
 } = cartApi;

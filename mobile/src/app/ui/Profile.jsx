@@ -3,7 +3,7 @@ import Header from "../../components/uiComponents/Header";
 import { useFonts } from "expo-font";
 import { styles } from "../stylesScreens/ProfileStyles";
 
-function Profile() {
+function Profile({ navigation }) {
 	const [fontsLoader] = useFonts({
 		Medium: require("../../assets/fonts/Lato-Regular.ttf"),
 		Bold: require("../../assets/fonts/Lato-Bold.ttf"),
@@ -26,7 +26,7 @@ function Profile() {
 				<View style={styles.boxTitle}>
 					<Text style={styles.title}>Chung</Text>
 				</View>
-				<Pressable>
+				<Pressable onPress={() => navigation.navigate("edit-info")}>
 					<Text style={styles.contentTitle}>Chỉnh sửa thông tin</Text>
 				</Pressable>
 				<Pressable>

@@ -9,11 +9,12 @@ import {
 	Pressable,
 } from "react-native";
 import { useFonts } from "expo-font";
-import { styles } from "../styles/RegisterStyles";
-import Input from "../../components/uiComponents/Input";
 import { useState, useRef } from "react";
-import Button from "../../components/uiComponents/Button";
 import { useCreateAccountRequestMutation } from "../../redux/service/customerService";
+import { styles } from "../styles/RegisterStyles";
+
+import Input from "../../components/uiComponents/Input";
+import Button from "../../components/uiComponents/Button";
 import Loading from "../../components/uiComponents/Loading";
 
 function Register({ navigation }) {
@@ -147,20 +148,8 @@ function Register({ navigation }) {
 							}}
 						/>
 						{error.ho_ten && (
-							<View
-								style={{
-									marginTop: 15,
-									marginHorizontal: 25,
-								}}
-							>
-								<Text
-									style={{
-										color: "red",
-										fontFamily: "Medium",
-									}}
-								>
-									{error.ho_ten}
-								</Text>
+							<View style={styles.containerBug}>
+								<Text style={styles.bug}>{error.ho_ten}</Text>
 							</View>
 						)}
 						<Input
@@ -174,20 +163,8 @@ function Register({ navigation }) {
 							}}
 						/>
 						{error.email && (
-							<View
-								style={{
-									marginTop: 15,
-									marginHorizontal: 25,
-								}}
-							>
-								<Text
-									style={{
-										color: "red",
-										fontFamily: "Medium",
-									}}
-								>
-									{error.email}
-								</Text>
+							<View style={styles.containerBug}>
+								<Text style={styles.bug}>{error.email}</Text>
 							</View>
 						)}
 						<Input
@@ -201,20 +178,8 @@ function Register({ navigation }) {
 							}}
 						/>
 						{error.so_dt && (
-							<View
-								style={{
-									marginTop: 15,
-									marginHorizontal: 25,
-								}}
-							>
-								<Text
-									style={{
-										color: "red",
-										fontFamily: "Medium",
-									}}
-								>
-									{error.so_dt}
-								</Text>
+							<View style={styles.containerBug}>
+								<Text style={styles.bug}>{error.so_dt}</Text>
 							</View>
 						)}
 						<Input
@@ -233,20 +198,8 @@ function Register({ navigation }) {
 						/>
 
 						{error.mat_khau && (
-							<View
-								style={{
-									marginTop: 15,
-									marginHorizontal: 25,
-								}}
-							>
-								<Text
-									style={{
-										color: "red",
-										fontFamily: "Medium",
-									}}
-								>
-									{error.mat_khau}
-								</Text>
+							<View style={styles.containerBug}>
+								<Text style={styles.bug}>{error.mat_khau}</Text>
 							</View>
 						)}
 
@@ -272,6 +225,7 @@ function Register({ navigation }) {
 								style={{
 									fontFamily: "Medium",
 									marginHorizontal: 10,
+									fontSize: 16,
 								}}
 							>
 								Hoặc

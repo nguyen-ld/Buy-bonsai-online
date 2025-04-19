@@ -58,8 +58,12 @@ function Home({ navigation }) {
 			id_san_pham: item.id_san_pham,
 		});
 	};
+
 	return (
-		<ScrollView style={styles.container}>
+		<ScrollView
+			style={styles.container}
+			showsVerticalScrollIndicator={false}
+		>
 			<StatusBar barStyle="dark-content" backgroundColor="#F6F6F6" />
 
 			<View style={styles.header}>

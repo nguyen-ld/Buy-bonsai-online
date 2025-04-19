@@ -2,11 +2,14 @@ import { FlatList, StatusBar, View, Text } from "react-native";
 import { styles } from "../styles-children/stylesCart";
 import Header from "../../components/uiComponents/Header";
 import { useFonts } from "expo-font";
-import CartItems from "../../components/uiComponents/ItemCarts";
+import ProductItems from "../../components/uiComponents/ProductItem";
 import Modals from "../../components/uiComponents/Modal";
 import Checkout from "../../components/uiComponents/Checkout";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleSelectedItem } from "../../redux/slice/cartSlide";
+import {
+	toggleSelectedItem,
+	updateQuantity,
+} from "../../redux/slice/cartSlide";
 import * as cartServices from "../../redux/service/cartServices";
 import { useMemo, useState } from "react";
 
@@ -25,6 +28,7 @@ function Cart({ navigation }) {
 	const [hide, setHide] = useState(false);
 	const [hideDelItem, setHideDelItem] = useState(false);
 	const [productIdSelected, setProductIdSelected] = useState(null);
+	const [quantity, setQuantity] = useState(0);
 
 	const itemSelectedList = useSelector(
 		(state) => state.cartReducer.selectedItem
@@ -38,22 +42,15 @@ function Cart({ navigation }) {
 		refetchOnMountOrArgChange: true,
 	});
 
-	const [changeQuantity] = cartServices.useChangeQuantityMutation();
-
 	const [deleteItemInCart] = cartServices.useDeleteItemInCartMutation();
 
 	//handle
 
-	const handleUpdateQuantity = async (id_san_pham, newQty) => {
-		try {
-			await changeQuantity({
-				id_khach_hang: 2,
-				id_san_pham: id_san_pham,
-				quantity: newQty,
-			}).unwrap();
-		} catch (error) {
-			console.log(error);
-		}
+	const handleUpdateQuantity = (so_luong, id_san_pham) => {
+		setQuantity(so_luong);
+		dispatch(
+			updateQuantity({ id_san_pham: id_san_pham, so_luong: so_luong })
+		);
 	};
 
 	const handleDeleteItemInCart = async () => {
@@ -65,7 +62,12 @@ function Cart({ navigation }) {
 			if (response) {
 				setHideDelItem(false);
 				if (itemSelectedList.includes(productIdSelected)) {
-					dispatch(toggleSelectedItem(productIdSelected));
+					dispatch(
+						toggleSelectedItem({
+							id_san_pham: productIdSelected,
+							so_luong: 1,
+						})
+					);
 				}
 				setProductIdSelected(null);
 				console.log("delete successfully");
@@ -75,8 +77,24 @@ function Cart({ navigation }) {
 		}
 	};
 
-	const handleSelected = (id) => {
-		dispatch(toggleSelectedItem(id));
+	const handleSelected = (
+		id_san_pham,
+		so_luong,
+		ten_san_pham,
+		gia_san_pham,
+		hinh_anh,
+		dac_diem
+	) => {
+		dispatch(
+			toggleSelectedItem({
+				id_san_pham: id_san_pham,
+				so_luong: so_luong,
+				ten_san_pham: ten_san_pham,
+				gia_san_pham: gia_san_pham,
+				hinh_anh: hinh_anh,
+				dac_diem: dac_diem,
+			})
+		);
 	};
 
 	const handleClickButton = () => {
@@ -85,22 +103,34 @@ function Cart({ navigation }) {
 
 	const handleErrorIncrements = () => {};
 
-	const handleErrorDecrement = (productId) => {
+	const handleErrorDecrement = (id_san_pham, so_luong) => {
 		setHideDelItem(!hideDelItem);
-		setProductIdSelected(productId);
-		dispatch(toggleSelectedItem(productId));
+		setProductIdSelected(id_san_pham);
+		dispatch(
+			toggleSelectedItem({ id_san_pham: id_san_pham, so_luong: so_luong })
+		);
 	};
 
-	const handleClickDeleteItem = (productId) => {
-		setProductIdSelected(productId);
+	const handleClickDeleteItem = (id_san_pham, so_luong) => {
+		setProductIdSelected(id_san_pham);
 		setHideDelItem(!hideDelItem);
-		dispatch(toggleSelectedItem(productId));
+		dispatch(
+			toggleSelectedItem({ id_san_pham: id_san_pham, so_luong: so_luong })
+		);
 	};
 
 	const handleCloseDel = () => {
 		setHideDelItem(!hideDelItem);
-		if (productIdSelected && itemSelectedList.includes(productIdSelected)) {
-			dispatch(toggleSelectedItem(productIdSelected));
+		if (
+			productIdSelected &&
+			itemSelectedList.some((i) => i.id_san_pham === productIdSelected)
+		) {
+			dispatch(
+				toggleSelectedItem({
+					id_san_pham: productIdSelected,
+					so_luong: quantity,
+				})
+			);
 		}
 		setProductIdSelected(null);
 	};
@@ -111,13 +141,18 @@ function Cart({ navigation }) {
 
 	const total = useMemo(() => {
 		if (data && data.data) {
-			return data.data
-				.filter((item) =>
-					itemSelectedList.includes(item.san_pham.id_san_pham)
-				)
-				.reduce((sum, item) => {
-					return sum + item.tong_tien;
-				}, 0);
+			return itemSelectedList.reduce((sum, selectedItem) => {
+				const matchedItem = data.data.find(
+					(item) =>
+						item.san_pham.id_san_pham === selectedItem.id_san_pham
+				);
+
+				if (matchedItem) {
+					const price = matchedItem.san_pham.gia_san_pham;
+					return sum + price * selectedItem.so_luong;
+				}
+				return sum;
+			}, 0);
 		}
 		return 0;
 	}, [data, itemSelectedList]);
@@ -145,17 +180,15 @@ function Cart({ navigation }) {
 						<FlatList
 							data={data.data}
 							renderItem={({ item }) => (
-								<CartItems
+								<ProductItems
 									item={item}
 									onDelete={handleClickDeleteItem}
 									onToggleSelected={handleSelected}
 									onDecrements={handleErrorDecrement}
-									onChangeQuantity={(newQty) => {
-										handleUpdateQuantity(
-											item.san_pham.id_san_pham,
-											newQty
-										);
-									}}
+									isChecked={true}
+									isPrice={true}
+									mode="edit"
+									onChangeQuantity={handleUpdateQuantity}
 								/>
 							)}
 							keyExtractor={(item) => item.id_chi_tiet_gio_hang}
@@ -184,7 +217,14 @@ function Cart({ navigation }) {
 				descriptions="Thao tác này sẽ không thể khôi phục"
 			/>
 
-			{itemSelectedList.length > 0 && <Checkout totalPrice={total} />}
+			{itemSelectedList.length > 0 && (
+				<Checkout
+					totalPrice={total}
+					onPress={() =>
+						navigation.navigate("checkout", { totalCart: total })
+					}
+				/>
+			)}
 		</View>
 	);
 }
